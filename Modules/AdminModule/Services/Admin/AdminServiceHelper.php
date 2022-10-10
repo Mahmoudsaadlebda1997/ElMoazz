@@ -59,4 +59,54 @@ trait AdminServiceHelper{
             'password' => 'required|min:12|confirmed',
         ]);
     }
+    public function forgetPassword(array $data)
+    {
+        $validation = $this->validationForgetPassword($data);
+        if ($validation->fails()){
+            return return_msg(false,'Validation Errors',[
+                'validation_errors' => $validation->getMessageBag()->getMessages(),
+            ]);
+        }
+        $token = strtoupper(uniqid());
+        ResetPassword::where('identifier',$data['email'])->delete();
+
+        ResetPassword::create(['identifier' => $data['email'] , 'token' => $token]);
+
+        $url = route('getResetPasswordSite',['token' => $token]);
+
+        send_email([
+            'to' => $data['email'],
+            'content' => ['url' => $url],
+            'subject' => "Reset Password",
+            'template' => 'mails.reset_password',
+        ]);
+        return  return_msg(true,'Success');
+
+
+    }
+    public function resetPassword(array $data)
+    {
+        $validation = $this->validationResetPassword($data);
+        if ($validation->fails()){
+            return return_msg(false,'Validation Errors',[
+                'validation_errors' => $validation->getMessageBag()->getMessages(),
+            ]);
+        }
+
+        $reset = ResetPassword::where('token',$data['token'])->first();
+
+        if (!$reset){
+            return return_msg(false,'Validation Errors',[
+                'validation_errors' => [
+                    'password'=> ["No User Found"]
+                ],
+            ]);
+        }
+        $admin = Admin::where('email',$reset->identifier)->first();
+        $admin->update(['password' => bcrypt($data['password'])]);
+        ResetPassword::where('token',$data['token'])->delete();
+
+        return  return_msg(true,'Success');
+
+    }
 }
