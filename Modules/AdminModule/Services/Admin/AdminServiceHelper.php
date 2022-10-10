@@ -3,6 +3,7 @@
 namespace Modules\AdminModule\Services\Admin;
 
 use Modules\AdminModule\Entities\Admin;
+use Modules\CommonModule\Entities\ResetPassword;
 
 trait AdminServiceHelper{
 
@@ -20,8 +21,6 @@ trait AdminServiceHelper{
         ]);
     }
     function validationCreate($data){
-        $types = implode(',',collect(Admin::ADMIN_TYPES)->values()->toArray());
-
         return validator($data,[
             'name'=>'required',
             'username' => 'required|alpha_num|unique:admins,username',
@@ -30,12 +29,10 @@ trait AdminServiceHelper{
             'email' => 'required|email|unique:admins,email,id',
             'phone' => 'required|numeric|digits:11,unique:admins,phone',
             'image' => 'nullable|image',
-            'type' => "required|in:$types"
+            'type' => "required|in:roles,id"
         ]);
     }
     function validationUpdate($data){
-        $types = implode(',',collect(Admin::ADMIN_TYPES)->values()->toArray());
-
         return validator($data,[
             'id'=>'required|exists:admins,id',
             'name'=>'required',
@@ -45,7 +42,7 @@ trait AdminServiceHelper{
             'email' => 'required|email|unique:admins,email,id',
             'phone' => 'required|numeric|digits:11,unique:admins,phone',
             'image' => 'nullable|image',
-            'type' => "required|in:$types"
+            'type' => "required|in:roles,id"
         ]);
     }
     protected  function validationForgetPassword($data){

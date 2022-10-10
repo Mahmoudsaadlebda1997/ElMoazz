@@ -26,7 +26,7 @@ Route::group(['prefix' => '','namespace' => 'Api'],function (){
         Route::delete('/{id}','AdminApiController@delete')->middleware('auth:admin_api');
     });
     Route::group(['prefix' => 'role'],function (){
-        Route::get('/','RoleApiController@index')->middleware('auth:admin_api');
+        Route::get('/','RoleApiController@index');//->middleware('auth:admin_api');
         Route::post('/create','RoleApiController@create');//->middleware('auth:admin_api');
         Route::put('/{id}','RoleApiController@update')->middleware('auth:admin_api');;
         Route::get('/{id}','RoleApiController@find')->middleware('auth:admin_api');

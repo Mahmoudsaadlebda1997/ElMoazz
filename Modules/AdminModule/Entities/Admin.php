@@ -3,7 +3,7 @@
 namespace Modules\AdminModule\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\CommonModule\Traits\PathHelper;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Admin extends Model

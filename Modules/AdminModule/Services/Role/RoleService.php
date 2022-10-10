@@ -17,6 +17,7 @@ class RoleService
 
     public function create(array $data){
         try {
+            dd($role);
             DB::beginTransaction();
             //validate Data
             $validation = $this->validationCreate($data);
@@ -25,13 +26,13 @@ class RoleService
                     'validation_errors' => $validation->getMessageBag()->getMessages(),
                 ]);
             }
-            $role = $this->adminRepository->create($data);
+            $role = $this->roleRepository->create($data);
             DB::commit();
+
             return return_msg(true,'Success',$role);
         }
         catch (\Exception $exception){
             DB::rollBack();
-
             handleExceptionDD($exception);
             return return_msg(false,'Success',[
                 'validation_errors' => [

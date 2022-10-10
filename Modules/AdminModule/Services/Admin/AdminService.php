@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Modules\AdminModule\Repositories\Admin\AdminRepository;
+use Modules\CommonModule\Traits\UploadHelper;
 
 class AdminService
 {
