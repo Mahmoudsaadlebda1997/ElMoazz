@@ -28,8 +28,8 @@ class RoleApiController extends Controller
     {
         $data =$this->roleService->create($request->all());
         if($data['status']){
-            $admin = new RoleResource($data['data']);
-            return return_response(return_msg(true,"Success",$admin));
+            $role = new RoleResource($data['data']);
+            return return_response(return_msg(true,"Success",$role));
         }
         return return_response($data);
     }
@@ -38,8 +38,8 @@ class RoleApiController extends Controller
         $request->request->add(['id'=> $id]);
         $data = $this->roleService->update($request->all());
         if($data['status']){
-            $admin = new RoleResource($data['data']);
-            return return_response(return_msg(true,"Success",$admin));
+            $role = new RoleResource($data['data']);
+            return return_response(return_msg(true,"Success",$role));
         }
         return return_response($data);
     }
@@ -47,8 +47,8 @@ class RoleApiController extends Controller
     {
         $data = $this->roleService->find($id);
         if($data['status']){
-            $admin = new RoleResource($data['data']);
-            return return_response(return_msg(true,"Success",$admin));
+            $role = new RoleResource($data['data']);
+            return return_response(return_msg(true,"Success",$role));
         }
         return return_response($data);
     }

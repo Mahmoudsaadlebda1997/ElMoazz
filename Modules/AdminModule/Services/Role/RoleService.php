@@ -17,7 +17,6 @@ class RoleService
 
     public function create(array $data){
         try {
-            dd($role);
             DB::beginTransaction();
             //validate Data
             $validation = $this->validationCreate($data);

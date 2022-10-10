@@ -62,7 +62,6 @@ class AdminService
                     'validation_errors' => $validation->getMessageBag()->getMessages(),
                 ]);
             }
-            $password =$data['password'];
             $data['password'] = bcrypt($data['password']);
             !($data['image'] ?? null) ? : $data['image'] = ($this->uploadFile($data['image'] ?? null,'admins')['name'] ?? null);
             $admin = $this->adminRepository->create($data);
