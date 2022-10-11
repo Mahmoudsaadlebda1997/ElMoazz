@@ -17,7 +17,7 @@
         "laravel/tinker": "^2.0",
         "nwidart/laravel-modules": "^8.3",
         "spatie/laravel-activitylog": "^3.17",
-        "tymon/jwt-auth": "1.0"
+        "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

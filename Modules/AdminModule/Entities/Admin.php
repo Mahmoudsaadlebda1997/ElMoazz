@@ -8,17 +8,17 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Admin extends Model
 {
-    use PathHelper,LogsActivity;
+    use PathHelper;
 
-    protected static $logAttributes = [
-        'name', 'username','type','email','phone','image'
-    ];
+//    protected static $logAttributes = [
+//        'name', 'username','type','email','phone','image'
+//    ];
 
     protected $fillable = ['name','phone','image','username','email','password','remember_token','type','role_id'];
 
-    protected static $logOnlyDirty = true;
+//    protected static $logOnlyDirty = true;
 
-    protected static $logName = 'Admin';
+//    protected static $logName = 'Admin';
 
 
     protected $appends =['image_path'];
