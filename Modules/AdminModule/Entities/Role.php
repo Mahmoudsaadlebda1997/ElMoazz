@@ -8,17 +8,8 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Role extends Model
 {
-    use LogsActivity;
 
     protected $fillable = ['title'];
-
-    protected static $logName = 'Role';
-
-    protected static $logOnlyDirty = true;
-
-    protected static $logAttributes = [
-        'title'
-    ];
 
     public function admins(){
         return $this->hasMany(Admin::class,'role_id');

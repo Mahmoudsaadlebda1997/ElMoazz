@@ -31,7 +31,6 @@ class AdminRepository
     public  function findByIds($ids){
         return $this->adminModel->whereIn('id',$ids)->with('role')->get();
     }
-
     public function delete($ids){
         return $this->adminModel->whereIn('id',$ids)->delete();
     }

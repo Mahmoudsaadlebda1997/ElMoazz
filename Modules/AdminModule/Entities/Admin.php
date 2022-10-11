@@ -10,12 +10,8 @@ class Admin extends Model
 {
     use PathHelper,LogsActivity;
 
-    const ADMIN_TYPES=[
-        'admin'=>'admin',
-        'driver'=>'driver'
-    ];
     protected static $logAttributes = [
-        'name', 'username', 'role.title','type','email','phone','image'
+        'name', 'username','type','email','phone','image'
     ];
 
     protected $fillable = ['name','phone','image','username','email','password','remember_token','type','role_id'];

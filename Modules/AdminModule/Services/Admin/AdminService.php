@@ -64,15 +64,13 @@ class AdminService
             }
             $data['password'] = bcrypt($data['password']);
             !($data['image'] ?? null) ? : $data['image'] = ($this->uploadFile($data['image'] ?? null,'admins')['name'] ?? null);
+            dd($data['rememeber_token']);
             $admin = $this->adminRepository->create($data);
             DB::commit();
             return return_msg(true,'Success',$admin);
-
-
         }
         catch (\Exception $exception){
             DB::rollBack();
-
             handleExceptionDD($exception);
             return return_msg(false,'Success',[
                 'validation_errors' => [

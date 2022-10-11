@@ -38,6 +38,7 @@ class AdminApiController extends Controller
     public function create(Request $request)
     {
         $data =$this->adminService->create($request->all());
+//        dd($data);
         if($data['status']){
             $admin = new AdminResource($data['data']);
             return return_response(return_msg(true,"Success",$admin));

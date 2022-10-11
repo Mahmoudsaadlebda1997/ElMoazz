@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 Route::group(['prefix' => '','namespace' => 'Api'],function (){
 
-    Route::group(['prefix' => 'admin'],function (){
+    Route::group(['prefix' => 'admins'],function (){
         Route::post('password/email', 'AdminApiController@forgot');
         Route::post('password/reset', 'AdminApiController@reset');
         Route::post('/login','AdminApiController@login');
@@ -28,9 +28,9 @@ Route::group(['prefix' => '','namespace' => 'Api'],function (){
     Route::group(['prefix' => 'role'],function (){
         Route::get('/','RoleApiController@index');//->middleware('auth:admin_api');
         Route::post('/create','RoleApiController@create');//->middleware('auth:admin_api');
-        Route::put('/{id}','RoleApiController@update')->middleware('auth:admin_api');;
-        Route::get('/{id}','RoleApiController@find')->middleware('auth:admin_api');
-        Route::delete('/{id}','RoleApiController@delete')->middleware('auth:admin_api');
+        Route::put('/{id}','RoleApiController@update');//->middleware('auth:admin_api');;
+        Route::get('/{id}','RoleApiController@find');//->middleware('auth:admin_api');
+        Route::delete('/{id}','RoleApiController@delete');//->middleware('auth:admin_api');
     });
 
     });

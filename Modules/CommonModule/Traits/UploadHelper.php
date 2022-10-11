@@ -13,11 +13,7 @@ trait UploadHelper
     protected function uploadFile($file,$path)
     {
         $file_name =  rand() . time() . '.' . $file->guessExtension();
-        if(auth('admin_api')->user()->batch_id){
-        $data['name'] = 'uploads/'.auth('admin_api')->user()->batch->title.'/'.$path.'/'.$file_name;
-        }else{
-            $data['name'] = 'uploads/'.$path.'/'.$file_name;
-        }
+        $data['name'] = 'uploads/'.$path.'/'.$file_name;
         $data['mime_type'] = $file->getClientMimeType();
         $data['extension'] = $file->getClientOriginalExtension();
         $data['placeholder'] = $file->getClientOriginalName();

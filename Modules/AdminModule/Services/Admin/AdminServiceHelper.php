@@ -29,7 +29,8 @@ trait AdminServiceHelper{
             'email' => 'required|email|unique:admins,email,id',
             'phone' => 'required|numeric|digits:11,unique:admins,phone',
             'image' => 'nullable|image',
-            'type' => "required|in:roles,id"
+            'type' => 'exists:roles,title'
+
         ]);
     }
     function validationUpdate($data){
@@ -42,7 +43,7 @@ trait AdminServiceHelper{
             'email' => 'required|email|unique:admins,email,id',
             'phone' => 'required|numeric|digits:11,unique:admins,phone',
             'image' => 'nullable|image',
-            'type' => "required|in:roles,id"
+            'type' => 'exists:roles,title'
         ]);
     }
     protected  function validationForgetPassword($data){
@@ -106,4 +107,8 @@ trait AdminServiceHelper{
         return  return_msg(true,'Success');
 
     }
+//    function return_msg(bool $status = false, string $msg = null, $data = null, $errors = [])
+//    {
+//        return ['status' => $status, 'msg' => $msg, 'data' => $data, 'errors' => $errors];
+//    }
 }

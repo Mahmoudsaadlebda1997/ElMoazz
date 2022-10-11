@@ -79,19 +79,28 @@ class RoleService
             ]);
         }
     }
-    public function delete(array $data){
-        try {
-            $this->roleRepository->delete($data['ids'] ?? []);
-            return return_msg(true,'Success');
-        }catch (\Exception $exception){
-            DB::rollBack();
-            handleExceptionDD($exception);
-            return return_msg(false,'Success',[
-                'validation_errors' => [
-                    'error_id' => [__('messages.server_error')],
-                ],
-            ]);
+    public function delete(array $data)
+    {
+        // Check Before Delete
+        $roles = $this->roleRepository->findByIds($data['ids'] ?? null);
+
+        foreach ($roles as $role){
+            if ($role->admins->count()){
+                return return_msg(false,'Validation',[
+                    'validation_errors' => [
+                        'error_id' => [
+                            __('messages.role_delete')
+                        ]
+                    ]
+                ]);
+            }
         }
+        $item = $this->roleRepository->delete($data['ids'] ?? []);
+        if ($item){
+            return return_msg(true,'Success');
+        }
+        return return_msg(false,'Success',$item);
+
     }
     public function all(array $data){
         try {
