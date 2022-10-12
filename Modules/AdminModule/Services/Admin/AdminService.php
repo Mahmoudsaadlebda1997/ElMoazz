@@ -1,13 +1,14 @@
 <?php
 namespace Modules\AdminModule\Services\Admin;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Modules\AdminModule\Entities\Admin;
 use Modules\AdminModule\Repositories\Admin\AdminRepository;
 use Modules\CommonModule\Entities\ResetPassword;
 use Modules\CommonModule\Traits\UploadHelper;
+use Illuminate\Support\Facades\Auth;
+
 
 class AdminService
 {
@@ -17,7 +18,7 @@ class AdminService
 
     public function __construct()
     {
-        $adminRepository = new AdminRepository();
+        $this->adminRepository = new AdminRepository();
     }
 
     public function login(array $data)
@@ -28,19 +29,14 @@ class AdminService
                 'validation_errors' => $validation->getMessageBag()->getMessages(),
             ]);
         }
-        $rememeber =($data['remember_token'] ?? null) ? true : false;
-        $username_or_email = $data['username'];
-        if(filter_var($username_or_email,FILTER_VALIDATE_EMAIL)){
-            $attemp =Auth::guard('admin')->attempt(['email'=>$data['username'],'password'=>$data['password'],$rememeber]);
-        }else{
-            $attemp = Auth::guard('admin')->attempt(['username'=>$data['username'],'password'=>$data['password'],$rememeber]);
-        }
-        if($attemp){
+        $remember = ($data['remember_token'] ?? null) ? true : false;
+
+        if (Auth::guard('admin')->attempt(['username' => $data['username'], 'password' => $data['password']],$remember)) {
             $admin = auth('admin')->user();
             $token = auth('admin_api')->login($admin);
             return return_msg(true,'Success',compact('admin','token'));
-
         }
+
         return return_msg(false,'Validation Errors',[
             'validation_errors' => [
                 'username' => [__('messages.login_error')]
@@ -99,13 +95,13 @@ class AdminService
                 $admin = $this->adminRepository->find($data['id']);
                 $this->removeFile([$admin->image]);
                 $data['image'] = $this->uploadFile($data['image'] ?? null,'admins')['name'] ?? null;
+            }else{
+                unset($data['image']);
+            }
                 $admin = $this->adminRepository->update($data);
                 DB::commit();
 
                 return return_msg(true,'Success',$admin);
-            }else{
-                unset($data['image']);
-            }
         }
         catch (\Exception $exception){
             DB::rollBack();

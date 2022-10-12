@@ -3,10 +3,13 @@
 namespace Modules\AdminModule\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Storage;
 use Modules\CommonModule\Traits\PathHelper;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Admin extends Model
+class Admin extends Authenticatable implements JWTSubject
 {
     use PathHelper;
 
@@ -25,6 +28,8 @@ class Admin extends Model
 
     protected $hidden = ['password', 'remember_token'];
 
+
+
     public function role(){
 
         return $this->belongsTo(Role::class,'role_id');
@@ -37,4 +42,21 @@ class Admin extends Model
             ->orWhere('phone','LIKE',"%$term%");
     });
     }
+    public function getImagePathAttribute()
+    {
+        if($this->image){
+            return Storage::url($this->image);
+        }
+        return \Avatar::create($this->name)->toBase64();
+
+    }
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
 }

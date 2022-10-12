@@ -8,10 +8,10 @@ use Modules\CommonModule\Entities\ResetPassword;
 trait AdminServiceHelper{
 
     function validationLogin($data){
-         return validator($data,[
-             'username'=> 'required',
-             'password' =>'requried|min:12'
-         ]);
+        return validator($data,[
+            'username' => 'required',
+            'password' => 'required|min:12',
+        ]);
     }
     function validationUpdatePassword($data){
         return validator($data,[
@@ -37,7 +37,7 @@ trait AdminServiceHelper{
             'id'=>'required|exists:admins,id',
             'name'=>'required',
             'username' => 'required|alpha_num|unique:admins,username',
-            'password' =>'required|min:12|confirmed',
+            'password' =>'nullable|min:12|confirmed',
             'role_id' => 'required|exists:roles,id',
             'email' => 'required|email|unique:admins,email,id',
             'phone' => 'required|numeric|digits:11,unique:admins,phone',

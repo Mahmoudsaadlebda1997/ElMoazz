@@ -21,7 +21,7 @@ Route::group(['prefix' => '','namespace' => 'Api'],function (){
         Route::post('/login','AdminApiController@login');
         Route::get('/','AdminApiController@index')->middleware('auth:admin_api');
         Route::post('/register','AdminApiController@create');//->middleware('auth:admin_api');
-        Route::put('/{id}','AdminApiController@update')->middleware('auth:admin_api');;
+        Route::put('/{id}','AdminApiController@update');//->middleware('auth:admin_api');;
         Route::get('/{id}','AdminApiController@find')->middleware('auth:admin_api');
         Route::delete('/{id}','AdminApiController@delete')->middleware('auth:admin_api');
     });
