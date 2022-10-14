@@ -3,6 +3,7 @@ namespace Modules\AdminModule\Services\Admin;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Modules\AdminModule\Entities\Admin;
 use Modules\AdminModule\Repositories\Admin\AdminRepository;
 use Modules\CommonModule\Entities\ResetPassword;
@@ -142,9 +143,14 @@ class AdminService
             ]);
         }
     }
-    public function delete(array $data){
+    public function delete($id){
         try {
-            $this->adminRepository->delete($data['ids'] ?? []);
+                // unlink
+            $admin = $this->adminRepository->find($id);
+            if($admin->image){
+                Storage::delete($admin->image);
+            }
+            $this->adminRepository->delete($id);
             return return_msg(true,'Success');
         }catch (\Exception $exception){
             DB::rollBack();

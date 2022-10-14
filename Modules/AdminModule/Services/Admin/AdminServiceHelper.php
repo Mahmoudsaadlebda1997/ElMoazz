@@ -41,7 +41,7 @@ trait AdminServiceHelper{
             'password' =>'nullable|min:12|confirmed',
             'role_id' => 'required|exists:roles,id',
             'email' => ['required', 'email', Rule::unique('admins')->ignore($data['id'])],
-            'phone' => ['nullable','numeric','digits:12', Rule::unique('admins','phone')->ignore($data['id'])],
+            'phone' => ['nullable','numeric','digits:11', Rule::unique('admins','phone')->ignore($data['id'])],
             'image' => 'nullable|image',
             'type' => 'exists:roles,title'
         ]);
