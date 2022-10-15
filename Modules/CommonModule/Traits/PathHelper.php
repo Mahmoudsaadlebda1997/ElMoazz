@@ -15,6 +15,12 @@ trait PathHelper
         }
         return null;
     }
+    function getItemImagePathAttribute(){
+        if($this->order_image){
+            return Storage::url($this->order_image);
+        }
+        return null;
+    }
     function getFilePathAttribute(){
         if($this->file){
             return Storage::url($this->file);

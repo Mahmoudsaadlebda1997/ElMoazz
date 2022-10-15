@@ -1,4 +1,5 @@
 {
     "AdminModule": true,
-    "CommonModule": true
+    "CommonModule": true,
+    "OrderModule": true
 }
