@@ -26,5 +26,11 @@ trait OrderRepoHelper {
             $current_date =Carbon::now();
             $collections->where('finish_date','>=',$current_date);
         }
+        if (($data['start_date'] ?? null)){
+            $collections->where('created_at','>=',$data['start_date']);
+        }
+        if (($data['end_date'] ?? null)){
+            $collections->where('created_at','<=',$data['end_date']);
+        }
     }
 }
